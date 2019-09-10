@@ -94,8 +94,6 @@ app.post('/restaurants/:id/edit', (req, res) => {
   })
 })
 
-
-
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   Restr.find((err, restrs) => {
@@ -104,6 +102,16 @@ app.get('/search', (req, res) => {
       return restr.name.toLowerCase().includes(keyword.toLowerCase())
     })
     return res.render('index', { restaurant: restaurantRes, keyword: keyword })
+  })
+})
+
+app.post('/restaurants/:id/delete', (req, res) => {
+  Restr.findById(req.params.id, (err, restr) => {
+    if (err) return console.error(err)
+    restr.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
   })
 })
 
