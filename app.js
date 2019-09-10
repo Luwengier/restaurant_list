@@ -56,7 +56,7 @@ app.post('/restaurants', (req, res) => {
     rating: req.body.rating,
     description: req.body.description
   })
-  // 存入資料庫
+
   restr.save(err => {
     if (err) return console.error(err)
     return res.redirect('/')
@@ -64,8 +64,10 @@ app.post('/restaurants', (req, res) => {
 })
 
 app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurantOne = restaurantList.results.find(restr => restr.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurantOne: restaurantOne })
+  Restr.findById(req.params.restaurant_id, (err, restr) => {
+    if (err) return console.error(err)
+    return res.render('show', { restaurantOne: restr })
+  })
 })
 
 app.get('/search', (req, res) => {
