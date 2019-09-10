@@ -5,13 +5,17 @@ const port = 3000
 
 // require express-handlebars here
 const exphbs = require('express-handlebars')
-//const restaurantList = require('./restaurant.json')
+const restaurantList = require('./restaurant.json')
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 // setting static files
 app.use(express.static('public'))
+
+// 設定 bodyParser
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //connect to mongodb
 const mongoose = require('mongoose')
@@ -35,6 +39,27 @@ app.get('/', (req, res) => {
   Restr.find((err, restrs) => {
     if (err) return console.error(err)
     return res.render('index', { restaurant: restrs })
+  })
+})
+
+app.get('/restaurants/new', (req, res) => {
+  return res.render('new')
+})
+
+app.post('/restaurants', (req, res) => {
+  const restr = new Restr({
+    name: req.body.name,
+    category: req.body.category,
+    image: req.body.image,
+    location: req.body.location,
+    phone: req.body.phone,
+    rating: req.body.rating,
+    description: req.body.description
+  })
+  // 存入資料庫
+  restr.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')
   })
 })
 

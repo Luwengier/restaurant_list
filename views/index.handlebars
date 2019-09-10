@@ -20,7 +20,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
-      <div class="card-columns mb-4">
+      <div class="card-columns mb-1">
         {{#each restaurant}}
         <a href="/restaurants/{{this.id}}" class="text-secondary">
           <div class="card mb-0">
@@ -40,14 +40,24 @@
           </div>
         </a>
         <div class="row justify-content-center mb-4">
-          <a href="/todos/{{{this.id}}}" class="text-secondary mr-2">detail</a>
+          <a href="/restaurants/{{this.id}}" class="text-secondary mr-2">detail</a>
           <a href="/todos/{{{this.id}}}/edit" class="text-secondary mr-2">edit</a>
           <form action="/todos/{{{this.id}}}/delete" method="POST" style="display: inline;">
             <button type="submit" class="btn btn-secondary btn-sm py-0">delete</button>
           </form>
         </div>
-
         {{/each}}
+
+
+
+
+      </div>
+      <div class="">
+        <div class="card-body">
+          <div class="row align-middle justify-content-center">
+            <a href="/restaurants/new" class="btn btn-secondary">Create</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
