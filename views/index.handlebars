@@ -39,17 +39,14 @@
             </div>
           </div>
         </a>
-        <div class="row justify-content-center mb-4">
+        <div class="text-right mb-4 mt-1">
           <a href="/restaurants/{{this.id}}" class="text-secondary mr-2">detail</a>
-          <a href="/todos/{{{this.id}}}/edit" class="text-secondary mr-2">edit</a>
-          <form action="/todos/{{{this.id}}}/delete" method="POST" style="display: inline;">
+          <a href="/restaurants/{{{this.id}}}/edit" class="text-secondary mr-2">edit</a>
+          <form action="/restaurants/{{{this.id}}}/delete" method="POST" style="display: inline;">
             <button type="submit" class="btn btn-secondary btn-sm py-0">delete</button>
           </form>
         </div>
         {{/each}}
-
-
-
 
       </div>
       <div class="">

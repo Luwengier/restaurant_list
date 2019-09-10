@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row justify-content-center my-5">
+    <form action="/restaurants/{{{restr.id}}}/edit" method="POST">
+      <div class="form-group">
+        <label>Restaurant name</label>
+        <input type="text" placeholder="name" name="name" value="{{{restr.name}}}">
+        <small class="form-text text-muted"></small>
+      </div>
+      <div class="form-group">
+        <label>Restaurant category</label>
+        <input type="text" placeholder="category" name="category" value="{{{restr.category}}}">
+        <small class="form-text text-muted"></small>
+      </div>
+      <div class="form-group">
+        <label>Restaurant image</label>
+        <input type="text" placeholder="image" name="image" value="{{{restr.image}}}">
+        <small class="form-text text-muted">please input url</small>
+      </div>
+      <div class="form-group">
+        <label>Restaurant location</label>
+        <input type="text" placeholder="location" name="location" value="{{{restr.location}}}">
+        <small class="form-text text-muted"></small>
+      </div>
+      <div class="form-group">
+        <label>Restaurant phone</label>
+        <input type="text" placeholder="phone" name="phone" value="{{{restr.phone}}}">
+        <small class="form-text text-muted"></small>
+      </div>
+      <div class="form-group">
+        <label>Restaurant rating</label>
+        <input type="text" placeholder="rating" name="rating" value="{{{restr.rating}}}">
+        <small class="form-text text-muted">please input number</small>
+      </div>
+      <div class="form-group">
+        <label>Restaurant description</label>
+        <input type="text" placeholder="description" name="description" value="{{{restr.description}}}">
+        <small class="form-text text-muted"></small>
+      </div>
+      <button type="submit">Edit</button>
+    </form>
+  </div>
+
+</div>

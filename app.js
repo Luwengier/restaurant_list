@@ -63,19 +63,48 @@ app.post('/restaurants', (req, res) => {
   })
 })
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  Restr.findById(req.params.restaurant_id, (err, restr) => {
+app.get('/restaurants/:id', (req, res) => {
+  Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     return res.render('show', { restaurantOne: restr })
   })
 })
 
+app.get('/restaurants/:id/edit', (req, res) => {
+  Restr.findById(req.params.id, (err, restr) => {
+    if (err) return console.error(err)
+    return res.render('edit', { restr: restr })
+  })
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  Restr.findById(req.params.id, (err, restr) => {
+    if (err) return console.error(err)
+    restr.name = req.body.name
+    restr.category = req.body.category
+    restr.image = req.body.image
+    restr.location = req.body.location
+    restr.phone = req.body.phone
+    restr.rating = req.body.rating
+    restr.description = req.body.description
+    restr.save(err => {
+      if (err) return console.error(err)
+      return res.redirect(`/restaurants/${req.params.id}`)
+    })
+  })
+})
+
+
+
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  const restaurantRes = restaurantList.results.filter(restr => {
-    return restr.name.toLowerCase().includes(keyword.toLowerCase())
+  Restr.find((err, restrs) => {
+    if (err) return console.error(err)
+    const restaurantRes = restrs.filter(restr => {
+      return restr.name.toLowerCase().includes(keyword.toLowerCase())
+    })
+    return res.render('index', { restaurant: restaurantRes, keyword: keyword })
   })
-  res.render('index', { restaurant: restaurantRes, keyword: keyword })
 })
 
 // start and listen on the Express server
