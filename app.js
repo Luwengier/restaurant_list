@@ -15,7 +15,7 @@ app.use(express.static('public'))
 
 //connect to mongodb
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
 const Restr = require('./models/restaurant')
 const db = mongoose.connection
 
