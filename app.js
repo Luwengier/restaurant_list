@@ -30,88 +30,9 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-
-
-//----------- routes setting ----------
-app.get('/', (req, res) => {
-  Restr.find((err, restrs) => {
-    if (err) return console.error(err)
-    return res.render('index', { restaurant: restrs })
-  })
-})
-
-app.get('/restaurants/new', (req, res) => {
-  return res.render('new')
-})
-
-app.post('/restaurants', (req, res) => {
-  const restr = new Restr({
-    name: req.body.name,
-    category: req.body.category,
-    image: req.body.image,
-    location: req.body.location,
-    phone: req.body.phone,
-    rating: req.body.rating,
-    description: req.body.description
-  })
-
-  restr.save(err => {
-    if (err) return console.error(err)
-    return res.redirect('/')
-  })
-})
-
-app.get('/restaurants/:id', (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
-    if (err) return console.error(err)
-    return res.render('show', { restaurantOne: restr })
-  })
-})
-
-app.get('/restaurants/:id/edit', (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
-    if (err) return console.error(err)
-    return res.render('edit', { restr: restr })
-  })
-})
-
-app.put('/restaurants/:id/edit', (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
-    if (err) return console.error(err)
-    restr.name = req.body.name
-    restr.category = req.body.category
-    restr.image = req.body.image
-    restr.location = req.body.location
-    restr.phone = req.body.phone
-    restr.rating = req.body.rating
-    restr.description = req.body.description
-    restr.save(err => {
-      if (err) return console.error(err)
-      return res.redirect(`/restaurants/${req.params.id}`)
-    })
-  })
-})
-
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  Restr.find((err, restrs) => {
-    if (err) return console.error(err)
-    const restaurantRes = restrs.filter(restr => {
-      return restr.name.toLowerCase().includes(keyword.toLowerCase())
-    })
-    return res.render('index', { restaurant: restaurantRes, keyword: keyword })
-  })
-})
-
-app.delete('/restaurants/:id/delete', (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
-    if (err) return console.error(err)
-    restr.remove(err => {
-      if (err) return console.error(err)
-      return res.redirect('/')
-    })
-  })
-})
+// --- 載入路由器 ---
+app.use('/', require('./routes/home'))
+app.use('/restaurants', require('./routes/restaurant'))
 
 // start and listen on the Express server
 app.listen(port, () => {
