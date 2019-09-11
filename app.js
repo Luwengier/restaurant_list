@@ -2,27 +2,25 @@
 const express = require('express')
 const app = express()
 const port = 3000
-
-// require express-handlebars here
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const methodOverride = require('method-override')
+
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
-
 // setting static files
 app.use(express.static('public'))
-
 // 設定 bodyParser
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
+// 設定 method-override
+app.use(methodOverride('_method'))
 
 //connect to mongodb
-const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
 const Restr = require('./models/restaurant')
 const db = mongoose.connection
-
 // 連線異常
 db.on('error', () => {
   console.log('mongodb error!')
@@ -77,7 +75,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
   })
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id/edit', (req, res) => {
   Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     restr.name = req.body.name
@@ -105,7 +103,7 @@ app.get('/search', (req, res) => {
   })
 })
 
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id/delete', (req, res) => {
   Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     restr.remove(err => {

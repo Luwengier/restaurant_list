@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-center my-5">
-    <form action="/restaurants/{{{restr.id}}}/edit" method="POST">
+    <form action="/restaurants/{{{restr.id}}}/edit?_method=PUT" method="POST">
       <div class="form-group">
         <label>Restaurant name</label>
         <input type="text" placeholder="name" name="name" value="{{{restr.name}}}">
