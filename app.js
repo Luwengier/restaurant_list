@@ -6,6 +6,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
+const session = require('express-session')
 
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -16,6 +17,11 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 // 設定 method-override
 app.use(methodOverride('_method'))
+app.use(session({
+  secret: 'yeeee',
+  resave: false,
+  saveUninitialized: true
+}))
 
 //connect to mongodb
 mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
