@@ -2,13 +2,15 @@ const express = require('express')
 const router = express.Router()
 const Restr = require('../models/restaurant')
 
+const { authenticated } = require('../config/auth')
+
 //--------- 路由 --------
 //新增頁面
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
   return res.render('new')
 })
 //新增
-router.post('/', (req, res) => {
+router.post('/', authenticated, (req, res) => {
   const restr = new Restr({
     name: req.body.name,
     category: req.body.category,
@@ -24,21 +26,21 @@ router.post('/', (req, res) => {
   })
 })
 //詳細頁面
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticated, (req, res) => {
   Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     return res.render('show', { restaurantOne: restr })
   })
 })
 //編輯頁面
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', authenticated, (req, res) => {
   Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     return res.render('edit', { restr: restr })
   })
 })
 //編輯
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', authenticated, (req, res) => {
   Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     restr.name = req.body.name
@@ -55,7 +57,7 @@ router.put('/:id/edit', (req, res) => {
   })
 })
 //搜尋
-router.get('/search', (req, res) => {
+router.get('/search', authenticated, (req, res) => {
   const keyword = req.query.keyword
   Restr.find((err, restrs) => {
     if (err) return console.error(err)
@@ -66,7 +68,7 @@ router.get('/search', (req, res) => {
   })
 })
 //刪除
-router.delete('/:id/delete', (req, res) => {
+router.delete('/:id/delete', authenticated, (req, res) => {
   Restr.findById(req.params.id, (err, restr) => {
     if (err) return console.error(err)
     restr.remove(err => {
