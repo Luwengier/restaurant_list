@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+
 const restrSchema = new Schema({
   name: {
     type: String,
@@ -27,6 +28,12 @@ const restrSchema = new Schema({
   },
   description: {
     type: String,
+    required: true
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
     required: true
   }
 })

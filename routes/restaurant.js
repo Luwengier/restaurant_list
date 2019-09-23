@@ -27,21 +27,21 @@ router.post('/', authenticated, (req, res) => {
 })
 //詳細頁面
 router.get('/:id', authenticated, (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
+  Restr.findOne({ _id: req.params.id, userId: req.user._id }, (err, restr) => {
     if (err) return console.error(err)
     return res.render('show', { restaurantOne: restr })
   })
 })
 //編輯頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
+  Restr.findOne({ _id: req.params.id, userId: req.user._id }, (err, restr) => {
     if (err) return console.error(err)
     return res.render('edit', { restr: restr })
   })
 })
 //編輯
 router.put('/:id/edit', authenticated, (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
+  Restr.findOne({ _id: req.params.id, userId: req.user._id }, (err, restr) => {
     if (err) return console.error(err)
     restr.name = req.body.name
     restr.category = req.body.category
@@ -69,7 +69,7 @@ router.get('/search', authenticated, (req, res) => {
 })
 //刪除
 router.delete('/:id/delete', authenticated, (req, res) => {
-  Restr.findById(req.params.id, (err, restr) => {
+  Restr.findOne({ _id: req.params.id, userId: req.user._id }, (err, restr) => {
     if (err) return console.error(err)
     restr.remove(err => {
       if (err) return console.error(err)

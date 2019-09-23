@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 
 //connect to mongodb
-mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true, useCreateIndex: true })
 const Restr = require('./models/restaurant')
 const db = mongoose.connection
 // 連線異常
