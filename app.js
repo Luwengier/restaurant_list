@@ -1,6 +1,9 @@
 // require packages used in the project
 const express = require('express')
 const app = express()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -33,7 +36,6 @@ app.use((req, res, next) => {
 })
 
 
-
 //connect to mongodb
 mongoose.connect('mongodb://localhost/restaurant', { useNewUrlParser: true, useCreateIndex: true })
 const Restr = require('./models/restaurant')
@@ -51,6 +53,8 @@ db.once('open', () => {
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
+
 
 // start and listen on the Express server
 app.listen(port, () => {
