@@ -37,16 +37,18 @@ module.exports = passport => {
       }).then(user => {
         if (!user) {
           let randomPassword = Math.random().toString(36).slice(-8)
-          bcrypt.hash(randomPassword, salt, (err, hash) => {
-            let newUser = User({
-              name: profile._json.name,
-              email: profile._json.email,
-              password: hash
-            })
-            newUser.save().then(user => {
-              return done(null, user)
-            }).catch(err => {
-              console.log(err)
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(randomPassword, salt, (err, hash) => {
+              let newUser = User({
+                name: profile._json.name,
+                email: profile._json.email,
+                password: hash
+              })
+              newUser.save().then(user => {
+                return done(null, user)
+              }).catch(err => {
+                console.log(err)
+              })
             })
           })
         } else {
