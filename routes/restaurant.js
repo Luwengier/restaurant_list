@@ -18,7 +18,8 @@ router.post('/', authenticated, (req, res) => {
     location: req.body.location,
     phone: req.body.phone,
     rating: req.body.rating,
-    description: req.body.description
+    description: req.body.description,
+    userId: req.user._id
   })
   restr.save(err => {
     if (err) return console.error(err)

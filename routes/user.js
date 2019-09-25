@@ -73,12 +73,6 @@ router.post('/register', (req, res) => {
               .catch(err => console.log(err))
           })
         })
-
-        newUser.save()
-          .then(user => {
-            res.redirect('/')
-          })
-          .catch(err => console.log(err))
       }
     })
   }
